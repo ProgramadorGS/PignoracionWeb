@@ -1067,6 +1067,7 @@ async function generatePDF() {
     putTxt('Solicitud de Inspección y Aprobación de Pignoración', ML+23, y+3);
     setTxt(7, 'normal', [160,185,225]);
     putTxt('Formulario oficial  —  Para uso exclusivo de Seguros Banreservas', ML+23, y+11);
+    setTxt(7, 'normal', [160,185,225]);
     y += 21;
     fillRect(ML, y, CW, 0.8, GOLD); y += 3;
 
@@ -1075,14 +1076,14 @@ async function generatePDF() {
     // ═══════════════════════════════════════════
     y = secTitle('DATOS GENERALES', y);
 
-    field(ML,         y, CW*0.73, 'a. Nombre del Asegurado', v('asegurado'));
+    field(ML,         y, CW*0.73, 'a). Nombre del Asegurado', v('asegurado'));
     field(ML+CW*0.73, y, CW*0.27, 'Fecha', fmtDate(v('fecha')));
     y += FH+0.5;
 
-    field(ML, y, CW, 'b. Nombre del Cliente', v('cliente'));
+    field(ML, y, CW, 'b). Nombre del Cliente', v('cliente'));
     y += FH+0.5;
 
-    field(ML,          y, CW*0.22, 'c. Cert.#',   v('cert'));
+    field(ML,          y, CW*0.22, 'c). Cert.#',   v('cert'));
     field(ML+CW*0.22,  y, CW*0.22, 'Dep.#',       v('dep'));
     field(ML+CW*0.44,  y, CW*0.22, 'Sol.#',       v('sol'));
     field(ML+CW*0.66,  y, CW*0.34, 'N° de Local', v('numlocal'));
@@ -1091,8 +1092,8 @@ async function generatePDF() {
     field(ML, y, CW, 'Ubicación de las Mercancías', v('ubicacion'));
     y += FH+0.5;
 
-    field(ML,         y, CW*0.48, 'd. Tipo de Local',        v('tipolocal'));
-    field(ML+CW*0.48, y, CW*0.52, 'e. Valor a Asegurar RD$', v('valor'));
+    field(ML,         y, CW*0.48, 'd). Tipo de Local',        v('tipolocal'));
+    field(ML+CW*0.48, y, CW*0.52, 'e). Valor a Asegurar RD$', v('valor'));
     y += FH+0.5;
 
     // Descripción
