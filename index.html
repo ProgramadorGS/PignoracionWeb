@@ -1103,7 +1103,7 @@ async function generatePDF() {
     fillRect(ML, y, CW, descH, BG_F);
     doc.setDrawColor(...LINE); doc.setLineWidth(0.2);
     doc.line(ML, y+descH, ML+CW, y+descH);
-    setTxt(5.5, 'normal', GRAY); putTxt('Descripción de las Mercancías', ML+1.5, y+0.8);
+    setTxt(5.5, 'bold', NAVY); putTxt('Descripción de las Mercancías', ML+1.5, y+0.8);
     if (descTxt) { setTxt(8, 'normal', DGRAY); doc.text(descLines2, ML+1.5, y+4, {baseline:'top'}); }
     y += descH + 2;
 
