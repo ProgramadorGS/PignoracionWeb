@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solicitud de Inspección y Aprobación de Pignoración — Seguros Banreservas</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #C8001A;
+    --red-dark: #8B0012;
+    --navy: #0D1B3E;
+    --navy-mid: #1A2F5A;
+    --gold: #C9A84C;
+    --gold-light: #F0D98A;
+    --cream: #FAF8F4;
+    --white: #FFFFFF;
+    --gray-50: #F7F6F3;
+    --gray-100: #EDEBE6;
+    --gray-200: #D9D5CC;
+    --gray-400: #9B9589;
+    --gray-600: #5C5750;
+    --gray-800: #2E2A24;
+    --input-bg: #FFFEF9;
+    --input-border: #C9C5BC;
+    --input-focus: #0D1B3E;
+    --section-accent: #E8F0FE;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--gray-800);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--navy);
+    color: white;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(13,27,62,0.3);
+  }
+
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .logo-badge {
+    width: 40px;
+    height: 40px;
+    background: var(--red);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    text-align: center;
+    padding: 4px;
+    flex-shrink: 0;
+  }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .logo-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .logo-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.04em;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 18px;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    border: none;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .btn-primary {
+    background: var(--red);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: var(--red-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(200,0,26,0.35);
+  }
+
+  .btn-primary:active { transform: translateY(0); }
+
+  .btn-ghost {
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.85);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+
+  .btn-ghost:hover {
+    background: rgba(255,255,255,0.14);
+    color: white;
+  }
+
+  .btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+  /* ── HERO BAND ── */
+  .hero-band {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #1E3A6E 100%);
+    color: white;
+    padding: 2.5rem 2rem;
+    border-bottom: 3px solid var(--gold);
+  }
+
+  .hero-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    line-height: 1.2;
+    color: white;
+    margin-bottom: 6px;
+  }
+
+  .hero-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    font-weight: 300;
+    letter-spacing: 0.04em;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 20px;
+    flex-shrink: 0;
+  }
+
+  .meta-pill {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+  }
+
+  .meta-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .meta-value {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gold-light);
+  }
+
+  /* ── MAIN FORM ── */
+  .form-wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+  }
+
+  /* ── SECTIONS ── */
+  .form-section {
+    background: var(--white);
+    border-radius: 12px;
+    border: 1px solid var(--gray-100);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    animation: fadeUp 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .form-section:nth-child(2) { animation-delay: 0.05s; }
+  .form-section:nth-child(3) { animation-delay: 0.10s; }
+  .form-section:nth-child(4) { animation-delay: 0.15s; }
+  .form-section:nth-child(5) { animation-delay: 0.20s; }
+
+  .section-head {
+    background: var(--navy);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-head-num {
+    width: 26px;
+    height: 26px;
+    background: var(--gold);
+    color: var(--navy);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .section-head-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .section-body {
+    padding: 24px;
+  }
+
+  /* ── FIELD GRID ── */
+  .field-grid {
+    display: grid;
+    gap: 20px 24px;
+    margin-bottom: 20px;
+  }
+
+  .field-grid:last-child { margin-bottom: 0; }
+
+  .cols-1 { grid-template-columns: 1fr; }
+  .cols-2 { grid-template-columns: 1fr 1fr; }
+  .cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .cols-2-1 { grid-template-columns: 2fr 1fr; }
+  .cols-1-2 { grid-template-columns: 1fr 2fr; }
+  .cols-3-1 { grid-template-columns: 3fr 1fr; }
+
+  .span-2 { grid-column: span 2; }
+  .span-3 { grid-column: span 3; }
+  .span-4 { grid-column: span 4; }
+
+  /* ── FIELDS ── */
+  .field { display: flex; flex-direction: column; gap: 6px; }
+
+  .field label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--gray-800);
+    background: var(--input-bg);
+    border: 1.5px solid var(--input-border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+    width: 100%;
+  }
+
+  .field textarea {
+    resize: vertical;
+    min-height: 72px;
+    line-height: 1.5;
+  }
+
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 3px rgba(13,27,62,0.08);
+  }
+
+  .field input[type="date"] { cursor: pointer; }
+
+  /* ── CHECKBOX GRID ── */
+  .chk-section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--navy);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .chk-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .chk-group { display: flex; flex-direction: column; gap: 6px; }
+
+  .chk-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    background: var(--gray-50);
+    border-radius: 8px;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+  }
+
+  .chk-item:hover { background: var(--section-accent); border-color: rgba(13,27,62,0.2); }
+
+  .chk-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--navy);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .chk-item span {
+    font-size: 13px;
+    color: var(--gray-700);
+    font-weight: 400;
+  }
+
+  .chk-item.checked {
+    background: #E8F0FE;
+    border-color: var(--navy);
+  }
+
+  .chk-item.checked span { color: var(--navy); font-weight: 500; }
+
+  /* ── RADIO BUTTONS ── */
+  .radio-group {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .radio-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    border: 2px solid var(--gray-200);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-600);
+    flex: 1;
+    min-width: 140px;
+    justify-content: center;
+  }
+
+  .radio-item input[type="radio"] { width: 18px; height: 18px; accent-color: var(--navy); cursor: pointer; }
+  .radio-item:hover { border-color: var(--navy); color: var(--navy); background: var(--section-accent); }
+
+  .radio-item.checked-aprobado { background: #E6F9EE; border-color: #2E7D52; color: #1A5233; }
+  .radio-item.checked-rechazado { background: #FDECEA; border-color: #C62828; color: #8B1A1A; }
+
+  /* ── REQUISITOS ── */
+  .requisitos {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-100);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 1.5rem;
+  }
+
+  .req-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--navy);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .req-title::before {
+    content: '';
+    width: 3px;
+    height: 14px;
+    background: var(--red);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .req-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+
+  .req-list li {
+    display: flex;
+    gap: 10px;
+    font-size: 12.5px;
+    color: var(--gray-600);
+    line-height: 1.5;
+    padding: 6px 8px;
+    border-radius: 6px;
+    transition: background 0.12s;
+  }
+
+  .req-list li:hover { background: var(--gray-100); }
+
+  .req-num {
+    width: 20px;
+    height: 20px;
+    background: var(--navy);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: var(--gray-100);
+    margin: 20px 0;
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--navy);
+    color: white;
+    padding: 14px 22px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 8px 30px rgba(13,27,62,0.3);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    z-index: 999;
+    max-width: 340px;
+  }
+
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.error { background: var(--red-dark); }
+  .toast.success { background: #1A5233; }
+
+  .toast svg { flex-shrink: 0; width: 18px; height: 18px; }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    background: var(--navy);
+    color: rgba(255,255,255,0.45);
+    text-align: center;
+    padding: 1.5rem 2rem;
+    font-size: 12px;
+    border-top: 3px solid var(--gold);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .cols-2, .cols-3, .cols-4 { grid-template-columns: 1fr; }
+    .cols-2-1, .cols-1-2, .cols-3-1 { grid-template-columns: 1fr; }
+    .span-2, .span-3, .span-4 { grid-column: span 1; }
+    .hero-meta { display: none; }
+    .form-wrap { padding: 1rem 1rem 3rem; }
+    .section-body { padding: 16px; }
+    .header-actions .btn-ghost { display: none; }
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    .site-header, .header-actions, .site-footer, .btn, .toast { display: none !important; }
+    body { background: white; }
+    .form-section { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo-area">
+      <div class="logo-badge-img"><img src="data:image/png;base64,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" alt="Seguros Banreservas" style="width:44px;height:44px;object-fit:contain;display:block;"></div>
+      <div class="logo-text">
+        <span class="logo-name">Seguros Banreservas</span>
+        <span class="logo-sub">Sistema de Formularios</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-ghost" onclick="clearForm()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
+        Limpiar
+      </button>
+      <button class="btn btn-primary" onclick="generatePDF()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        Generar PDF
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero-band">
+  <div class="hero-inner">
+    <div>
+      <h1 class="hero-title">Solicitud de Inspección<br>y Aprobación de Pignoración</h1>
+      <p class="hero-sub">Complete todos los campos y genere el PDF al finalizar</p>
+    </div>
+    <div class="hero-meta">
+      <div class="meta-pill">
+        <span class="meta-label">Versión</span>
+        <span class="meta-value">1.0</span>
+      </div>
+      <div class="meta-pill">
+        <span class="meta-label">Fecha hoy</span>
+        <span class="meta-value" id="today-date">—</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FORM -->
+<div class="form-wrap">
+
+  <!-- SECTION 1: DATOS GENERALES -->
+  <div class="form-section">
+    <div class="section-head">
+      <div class="section-head-num">A</div>
+      <span class="section-head-title">Datos Generales</span>
+    </div>
+    <div class="section-body">
+      <div class="field-grid cols-3-1">
+        <div class="field">
+          <label>a. Nombre del Asegurado</label>
+          <input type="text" id="asegurado" placeholder="Nombre completo del asegurado">
+        </div>
+        <div class="field">
+          <label>Fecha</label>
+          <input type="date" id="fecha">
+        </div>
+      </div>
+      <div class="field-grid cols-1">
+        <div class="field">
+          <label>b. Nombre del Cliente</label>
+          <input type="text" id="cliente" placeholder="Nombre completo del cliente">
+        </div>
+      </div>
+      <div class="field-grid cols-4">
+        <div class="field">
+          <label>c. Cert.#</label>
+          <input type="text" id="cert" placeholder="">
+        </div>
+        <div class="field">
+          <label>Dep.#</label>
+          <input type="text" id="dep" placeholder="">
+        </div>
+        <div class="field">
+          <label>Sol.#</label>
+          <input type="text" id="sol" placeholder="">
+        </div>
+        <div class="field">
+          <label>Número de Local</label>
+          <input type="text" id="numlocal" placeholder="">
+        </div>
+      </div>
+      <div class="field-grid cols-1">
+        <div class="field">
+          <label>Ubicación de las Mercancías</label>
+          <input type="text" id="ubicacion" placeholder="Dirección o descripción de la ubicación">
+        </div>
+      </div>
+      <div class="field-grid cols-2">
+        <div class="field">
+          <label>d. Tipo de Local</label>
+          <select id="tipolocal">
+            <option value="">Seleccionar tipo...</option>
+            <option>Almacén</option>
+            <option>Silo</option>
+            <option>Cuarto Refrigerado</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>e. Valor a Asegurar RD$</label>
+          <input type="text" id="valor" placeholder="0.00">
+        </div>
+      </div>
+      <div class="field-grid cols-1">
+        <div class="field">
+          <label>Descripción de las Mercancías</label>
+          <textarea id="descripcion" placeholder="Describa las mercancías a asegurar..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: DESCRIPCIÓN DEL LOCAL -->
+  <div class="form-section">
+    <div class="section-head">
+      <div class="section-head-num">B</div>
+      <span class="section-head-title">Descripción del Local</span>
+    </div>
+    <div class="section-body">
+      <div class="field-grid cols-4" style="margin-bottom:24px;">
+        <div class="field">
+          <label>Largo (m)</label>
+          <input type="number" id="largo" placeholder="0" min="0" step="0.1">
+        </div>
+        <div class="field">
+          <label>Ancho (m)</label>
+          <input type="number" id="ancho" placeholder="0" min="0" step="0.1">
+        </div>
+        <div class="field">
+          <label>Alto (m)</label>
+          <input type="number" id="alto" placeholder="0" min="0" step="0.1">
+        </div>
+        <div class="field">
+          <label>Cap. Máxima RD$</label>
+          <input type="text" id="capmaxima" placeholder="0.00">
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- PAREDES & TECHOS -->
+      <div class="chk-grid">
+        <div class="chk-group">
+          <div class="chk-section-title">Paredes</div>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="p-concreto"><span>Concreto</span>
+          </label>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="p-metal"><span>Metal</span>
+          </label>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="p-madera"><span>Madera</span>
+          </label>
+        </div>
+        <div class="chk-group">
+          <div class="chk-section-title">Techos</div>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="t-concreto"><span>Concreto</span>
+          </label>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="t-zinc"><span>Zinc</span>
+          </label>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="t-aluzinc"><span>Aluzinc</span>
+          </label>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="t-asbesto"><span>Asbesto</span>
+          </label>
+        </div>
+        <div class="chk-group">
+          <div class="chk-section-title">Tijerillas / Puertas</div>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="tj-metalicas"><span>Metálicas</span>
+          </label>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="tj-maderas"><span>Maderas</span>
+          </label>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="tj-metalmadera"><span>Metal y madera</span>
+          </label>
+        </div>
+        <div class="chk-group">
+          <div class="chk-section-title">Puertas</div>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="pu-tola"><span>Tola</span>
+          </label>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="pu-enrollables"><span>Enrollables</span>
+          </label>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="pu-madera"><span>Madera</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="chk-grid">
+        <div class="chk-group">
+          <div class="chk-section-title">Pisos</div>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="pi-concreto"><span>Concreto</span>
+          </label>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="pi-madera"><span>Madera</span>
+          </label>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="pi-tierra"><span>Tierra</span>
+          </label>
+        </div>
+        <div class="chk-group">
+          <div class="chk-section-title">Ventanas</div>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="ve-metalicas"><span>Metálicas</span>
+          </label>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="ve-madera"><span>Madera</span>
+          </label>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="ve-nohay"><span>No hay</span>
+          </label>
+        </div>
+        <div class="chk-group">
+          <div class="chk-section-title">Seguridad</div>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="se-extintores"><span>Extintores</span>
+          </label>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="se-alarmas"><span>Alarmas</span>
+          </label>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="se-puertas"><span>Puertas</span>
+          </label>
+        </div>
+        <div class="chk-group">
+          <div class="chk-section-title" style="border-color:transparent; color:transparent;">.</div>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="se-armado"><span>Sereno armado</span>
+          </label>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="se-desarmado"><span>Sereno desarmado</span>
+          </label>
+          <label class="chk-item" onclick="toggleChk(this)">
+            <input type="checkbox" id="se-candado"><span>Candado exclusivo almacenadora</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: SOLICITADO POR -->
+  <div class="form-section">
+    <div class="section-head">
+      <div class="section-head-num">C</div>
+      <span class="section-head-title">Solicitado Por</span>
+    </div>
+    <div class="section-body">
+      <div class="field-grid cols-3">
+        <div class="field">
+          <label>Nombre</label>
+          <input type="text" id="sol-nombre" placeholder="Nombre del solicitante">
+        </div>
+        <div class="field">
+          <label>Firma (nombre escrito)</label>
+          <input type="text" id="sol-firma" placeholder="">
+        </div>
+        <div class="field">
+          <label>Fecha</label>
+          <input type="date" id="sol-fecha">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: REQUISITOS -->
+  <div class="requisitos">
+    <div class="req-title">Requisitos Mínimos para Aceptación de Pignoraciones</div>
+    <ol class="req-list">
+      <li><span class="req-num">1</span><span>Las edificaciones deben ser de muros de bloques concreto y techos de concreto o aluzínc sobre estructuras metálicas. Las puertas deben ser seguras, preferiblemente enrollables o similares.</span></li>
+      <li><span class="req-num">2</span><span>Los silos deben ser herméticos, metálicos o de concreto.</span></li>
+      <li><span class="req-num">3</span><span>Las mercancías deben estar colocadas de manera que se puedan cuantificar con facilidad.</span></li>
+      <li><span class="req-num">4</span><span>En los almacenes y silos solo pueden existir mercancías pignoradas. No habrá ninguna otra mercancía.</span></li>
+      <li><span class="req-num">5</span><span>Cada silo o almacén debe poseer al menos un candado del que solo tenga las llaves el personal de la empresa pignoradora.</span></li>
+      <li><span class="req-num">6</span><span>En cada almacén o silo debe haber por lo menos un extintor de 10 libras o mayor.</span></li>
+      <li><span class="req-num">7</span><span>En los almacenes las mercancías deben estar colocadas sobre tarimas.</span></li>
+      <li><span class="req-num">8</span><span>El cableado eléctrico debe estar empotrado o en tuberías metálicas (EMT).</span></li>
+      <li><span class="req-num">9</span><span>Las mercancías deben estar custodiadas de forma permanente.</span></li>
+      <li><span class="req-num">10</span><span>Los silos y almacenes deben ser suficientemente seguros para que nadie tenga acceso a las mercancías pignoradas en ausencia del custodio, a menos que se utilice escalamiento o violencia.</span></li>
+      <li><span class="req-num">11</span><span>Cada silo o almacén debe estar enumerado de forma visible.</span></li>
+      <li><span class="req-num">12</span><span>Las mercancías pignoradas deben estar identificadas mediante la tarjeta de la empresa pignoradora.</span></li>
+    </ol>
+  </div>
+
+  <!-- SECTION 5: RESULTADOS -->
+  <div class="form-section">
+    <div class="section-head">
+      <div class="section-head-num">D</div>
+      <span class="section-head-title">Resultados de la Inspección — Uso de Seguros Banreservas</span>
+    </div>
+    <div class="section-body">
+      <div style="margin-bottom:20px;">
+        <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--gray-600);display:block;margin-bottom:10px;">Resultado</label>
+        <div class="radio-group">
+          <label class="radio-item" id="lbl-aprobado" onclick="selectRadio('aprobado')">
+            <input type="radio" name="resultado" value="Aprobado" id="r-aprobado">
+            <span>✅ &nbsp;Aprobado</span>
+          </label>
+          <label class="radio-item" id="lbl-rechazado" onclick="selectRadio('rechazado')">
+            <input type="radio" name="resultado" value="Rechazado" id="r-rechazado">
+            <span>❌ &nbsp;Rechazado</span>
+          </label>
+        </div>
+      </div>
+      <div class="field-grid cols-1">
+        <div class="field">
+          <label>Observaciones</label>
+          <textarea id="observaciones" rows="4" placeholder="Escriba las observaciones del resultado de la inspección..."></textarea>
+        </div>
+      </div>
+      <div class="field-grid cols-3">
+        <div class="field">
+          <label>Nombre del Inspector</label>
+          <input type="text" id="insp-nombre" placeholder="">
+        </div>
+        <div class="field">
+          <label>Firma (nombre escrito)</label>
+          <input type="text" id="insp-firma" placeholder="">
+        </div>
+        <div class="field">
+          <label>Fecha</label>
+          <input type="date" id="insp-fecha">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GENERATE BUTTON -->
+  <div style="display:flex;gap:12px;justify-content:center;margin-top:2rem;">
+    <button class="btn btn-ghost" onclick="clearForm()" style="background:white;color:var(--gray-600);border:1.5px solid var(--gray-200);padding:13px 28px;font-size:14px;border-radius:8px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
+      Limpiar Formulario
+    </button>
+    <button class="btn btn-primary" onclick="generatePDF()" style="padding:13px 36px;font-size:15px;border-radius:8px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+      Generar PDF
+    </button>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  Seguros Banreservas &nbsp;·&nbsp; Solicitud de Inspección y Aprobación de Pignoración &nbsp;·&nbsp; Uso interno
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="toast-icon">
+    <polyline points="20 6 9 17 4 12"/>
+  </svg>
+  <span id="toast-msg">Mensaje</span>
+</div>
+
+<script>
+// ── INIT ──────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const now = new Date();
+  const opts = { day:'2-digit', month:'short', year:'numeric' };
+  document.getElementById('today-date').textContent = now.toLocaleDateString('es-DO', opts);
+  document.getElementById('fecha').value = now.toISOString().split('T')[0];
+});
+
+// ── TOGGLE CHECKBOX STYLE ─────────────────────────────────────────
+function toggleChk(el) {
+  setTimeout(() => {
+    const cb = el.querySelector('input[type="checkbox"]');
+    if (cb.checked) el.classList.add('checked');
+    else el.classList.remove('checked');
+  }, 0);
+}
+
+// ── RADIO BUTTONS ─────────────────────────────────────────────────
+function selectRadio(which) {
+  document.getElementById('r-' + which).checked = true;
+  const lblA = document.getElementById('lbl-aprobado');
+  const lblR = document.getElementById('lbl-rechazado');
+  lblA.className = 'radio-item' + (which === 'aprobado' ? ' checked-aprobado' : '');
+  lblR.className = 'radio-item' + (which === 'rechazado' ? ' checked-rechazado' : '');
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────
+function showToast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  const icon = document.getElementById('toast-icon');
+  t.className = 'toast ' + type;
+  document.getElementById('toast-msg').textContent = msg;
+  icon.innerHTML = type === 'success'
+    ? '<polyline points="20 6 9 17 4 12"/>'
+    : '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ── CLEAR FORM ────────────────────────────────────────────────────
+function clearForm() {
+  if (!confirm('¿Seguro que deseas limpiar todos los campos?')) return;
+  document.querySelectorAll('input:not([type="radio"]):not([type="checkbox"]), textarea, select').forEach(el => el.value = '');
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+    cb.checked = false;
+    cb.closest('.chk-item')?.classList.remove('checked');
+  });
+  document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+  document.getElementById('lbl-aprobado').className = 'radio-item';
+  document.getElementById('lbl-rechazado').className = 'radio-item';
+  document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
+  showToast('Formulario limpiado', 'success');
+}
+
+// ── HELPERS ───────────────────────────────────────────────────────
+const v = id => (document.getElementById(id)?.value || '').trim();
+const c = id => !!document.getElementById(id)?.checked;
+const mark = id => c(id) ? '☑' : '☐';
+
+function fmtDate(str) {
+  if (!str) return '';
+  const [y, m, d] = str.split('-');
+  const months = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  return `${d} ${months[parseInt(m)-1]} ${y}`;
+}
+
+// ── GENERATE PDF ──────────────────────────────────────────────────
+async function generatePDF() {
+  try {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'letter' });
+
+    const PW = 216, PH = 279;
+    const ML = 11, MR = 11;
+    const CW = PW - ML - MR;
+    let y = 10;
+
+    const NAVY  = [13, 27, 62];
+    const GOLD  = [201, 168, 76];
+    const WHITE = [255, 255, 255];
+    const GRAY  = [120, 116, 110];
+    const DGRAY = [60, 58, 54];
+    const LGRAY = [200, 198, 194];
+    const LINE  = [220, 218, 214];
+    const BG_F  = [248, 248, 251];
+
+    // ── primitives ────────────────────────────────────────────────
+    const fillRect = (x, yy, w, h, col) => {
+      doc.setFillColor(...col); doc.rect(x, yy, w, h, 'F');
+    };
+    const strokeRect = (x, yy, w, h, col, lw=0.2) => {
+      doc.setDrawColor(...col); doc.setLineWidth(lw); doc.rect(x, yy, w, h, 'S');
+    };
+    const hline = (yy, col=LINE, lw=0.25) => {
+      doc.setDrawColor(...col); doc.setLineWidth(lw); doc.line(ML, yy, PW-MR, yy);
+    };
+    const setTxt = (size, style, col) => {
+      doc.setFontSize(size); doc.setFont('helvetica', style); doc.setTextColor(...col);
+    };
+    const putTxt = (text, x, yy, opts={}) => doc.text(String(text), x, yy, {baseline:'top', ...opts});
+
+    // ── compact field: thin bottom-border only ─────────────────────
+    const FH = 7;
+    const field = (x, yy, w, lbl, val) => {
+      fillRect(x, yy, w-0.5, FH, BG_F);
+      doc.setDrawColor(...LINE); doc.setLineWidth(0.2);
+      doc.line(x, yy+FH, x+w-0.5, yy+FH);
+      setTxt(5.5, 'bold', NAVY); putTxt(lbl, x+1.5, yy+0.8);
+      setTxt(8, 'bold', NAVY);
+      const lines = doc.splitTextToSize(val || '', w-3);
+      putTxt(lines[0] || '', x+1.5, yy+3.5);
+    };
+
+    // ── section title: just a left-bar + bold text, no fill ────────
+    const secTitle = (txt, yy) => {
+      fillRect(ML, yy, 1.5, 5, GOLD);
+      setTxt(8.5, 'bold', NAVY);
+      putTxt(txt, ML+4, yy+0.5);
+      hline(yy+6, LINE, 0.3);
+      return yy + 8;
+    };
+
+    // ── checkbox drawn with rects ──────────────────────────────────
+    const drawCheckbox = (x, yy, checked) => {
+      const sz = 2.8;
+      fillRect(x, yy, sz, sz, WHITE);
+      strokeRect(x, yy, sz, sz, checked ? NAVY : LGRAY, checked ? 0.5 : 0.3);
+      if (checked) {
+        doc.setDrawColor(...NAVY); doc.setLineWidth(0.55);
+        doc.line(x+0.5, yy+1.4, x+1.2, yy+2.2);
+        doc.line(x+1.2, yy+2.2, x+2.4, yy+0.6);
+      }
+    };
+
+    const chkItem = (x, yy, id, lbl, rh=4.5) => {
+      const checked = c(id);
+      drawCheckbox(x+1.2, yy+(rh-2.8)/2, checked);
+      setTxt(checked ? 7.5 : 7, checked ? 'bold' : 'normal', checked ? NAVY : GRAY);
+      putTxt(lbl, x+5.5, yy+(rh-2.5)/2);
+    };
+
+    // ═══════════════════════════════════════════
+    // HEADER — logo + title
+    // ═══════════════════════════════════════════
+    const LOGO_B64 = 'data:image/png;base64,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';
+    doc.addImage(LOGO_B64, 'PNG', ML, y, 18, 18);
+    putTxt('Solicitud de Inspección y Aprobación de Pignoración', ML+23, y+3);
+    setTxt(7, 'normal', [160,185,225]);
+    putTxt('Formulario oficial  —  Para uso exclusivo de Seguros Banreservas', ML+23, y+11);
+    y += 21;
+    fillRect(ML, y, CW, 0.8, GOLD); y += 3;
+
+    // ═══════════════════════════════════════════
+    // A. DATOS GENERALES
+    // ═══════════════════════════════════════════
+    y = secTitle('DATOS GENERALES', y);
+
+    field(ML,         y, CW*0.73, 'a. Nombre del Asegurado', v('asegurado'));
+    field(ML+CW*0.73, y, CW*0.27, 'Fecha', fmtDate(v('fecha')));
+    y += FH+0.5;
+
+    field(ML, y, CW, 'b. Nombre del Cliente', v('cliente'));
+    y += FH+0.5;
+
+    field(ML,          y, CW*0.22, 'c. Cert.#',   v('cert'));
+    field(ML+CW*0.22,  y, CW*0.22, 'Dep.#',       v('dep'));
+    field(ML+CW*0.44,  y, CW*0.22, 'Sol.#',       v('sol'));
+    field(ML+CW*0.66,  y, CW*0.34, 'N° de Local', v('numlocal'));
+    y += FH+0.5;
+
+    field(ML, y, CW, 'Ubicación de las Mercancías', v('ubicacion'));
+    y += FH+0.5;
+
+    field(ML,         y, CW*0.48, 'd. Tipo de Local',        v('tipolocal'));
+    field(ML+CW*0.48, y, CW*0.52, 'e. Valor a Asegurar RD$', v('valor'));
+    y += FH+0.5;
+
+    // Descripción
+    const descTxt = v('descripcion') || '';
+    const descLines2 = doc.splitTextToSize(descTxt, CW-3);
+    const descH = Math.max(7, descLines2.length * 3.8 + 4);
+    fillRect(ML, y, CW, descH, BG_F);
+    doc.setDrawColor(...LINE); doc.setLineWidth(0.2);
+    doc.line(ML, y+descH, ML+CW, y+descH);
+    setTxt(5.5, 'normal', GRAY); putTxt('Descripción de las Mercancías', ML+1.5, y+0.8);
+    if (descTxt) { setTxt(8, 'normal', DGRAY); doc.text(descLines2, ML+1.5, y+4, {baseline:'top'}); }
+    y += descH + 2;
+
+    // ═══════════════════════════════════════════
+    // B. DESCRIPCIÓN DEL LOCAL
+    // ═══════════════════════════════════════════
+    y = secTitle('DESCRIPCIÓN DEL LOCAL', y);
+
+    field(ML,           y, CW*0.23, 'Largo (m)',            v('largo'));
+    field(ML+CW*0.23,   y, CW*0.23, 'Ancho (m)',            v('ancho'));
+    field(ML+CW*0.46,   y, CW*0.23, 'Alto (m)',             v('alto'));
+    field(ML+CW*0.69,   y, CW*0.31, 'Capacidad Máxima RD$', v('capmaxima'));
+    y += FH + 2;
+
+    // Checkbox grid — 6 columns, no fill in headers
+    const chkGroups = [
+      { title:'Paredes',    items:[['p-concreto','Concreto'],['p-metal','Metal'],['p-madera','Madera']] },
+      { title:'Techos',     items:[['t-concreto','Concreto'],['t-zinc','Zinc'],['t-aluzinc','Aluzinc'],['t-asbesto','Asbesto']] },
+      { title:'Tijerillas', items:[['tj-metalicas','Metálicas'],['tj-maderas','Maderas'],['tj-metalmadera','Metal y mad.']] },
+      { title:'Puertas',    items:[['pu-tola','Tola'],['pu-enrollables','Enrollables'],['pu-madera','Madera']] },
+      { title:'Pisos',      items:[['pi-concreto','Concreto'],['pi-madera','Madera'],['pi-tierra','Tierra']] },
+      { title:'Ventanas',   items:[['ve-metalicas','Metálicas'],['ve-madera','Madera'],['ve-nohay','No hay']] },
+    ];
+    const nC = chkGroups.length;
+    const cW = CW / nC;
+    const iH = 4.5; // item height
+    const maxI = Math.max(...chkGroups.map(g => g.items.length));
+
+    // draw outer border for whole grid
+    strokeRect(ML, y, CW, 5 + maxI*iH, LGRAY, 0.2);
+
+    // column header row — white bg, bold navy text, bottom line only
+    chkGroups.forEach((g, i) => {
+      const gx = ML + i*cW;
+      doc.setDrawColor(...LINE); doc.setLineWidth(0.2);
+      doc.line(gx, y+5, gx+cW, y+5); // bottom of header
+      if (i > 0) doc.line(gx, y, gx, y + 5 + maxI*iH); // vertical separator
+      setTxt(7, 'bold', NAVY);
+      putTxt(g.title, gx+2, y+1);
+    });
+    y += 5;
+
+    // items
+    for (let row = 0; row < maxI; row++) {
+      chkGroups.forEach((g, i) => {
+        const rx = ML + i*cW;
+        const ry = y + row*iH;
+        if (row%2===0) fillRect(rx+0.1, ry, cW-0.2, iH, BG_F);
+        if (row < g.items.length) chkItem(rx, ry, g.items[row][0], g.items[row][1], iH);
+      });
+    }
+    y += maxI*iH + 2;
+
+    // Seguridad row — same style
+    setTxt(7, 'bold', NAVY);
+    fillRect(ML, y, 1.5, 5, GOLD);
+    putTxt('Seguridad', ML+4, y+0.5);
+    y += 6;
+
+    const segItems = [
+      ['se-extintores','Extintores'],['se-alarmas','Alarmas'],['se-puertas','Puertas'],
+      ['se-armado','Sereno armado'],['se-desarmado','Sereno desarmado'],['se-candado','Candado excl. almacenadora'],
+    ];
+    strokeRect(ML, y, CW, Math.ceil(segItems.length/3)*iH, LGRAY, 0.2);
+    const sW = CW/3;
+    const segRows = Math.ceil(segItems.length/3);
+    for (let row=0; row<segRows; row++) {
+      for (let col=0; col<3; col++) {
+        const idx=row*3+col, sx=ML+col*sW, sy=y+row*iH;
+        if (col>0) { doc.setDrawColor(...LINE); doc.setLineWidth(0.15); doc.line(sx,y,sx,y+segRows*iH); }
+        if (row%2===0) fillRect(sx+0.1, sy, sW-0.2, iH, BG_F);
+        if (idx<segItems.length) chkItem(sx, sy, segItems[idx][0], segItems[idx][1], iH);
+      }
+    }
+    y += segRows*iH + 3;
+
+    // ═══════════════════════════════════════════
+    // C. SOLICITADO POR
+    // ═══════════════════════════════════════════
+    y = secTitle('SOLICITADO POR', y);
+    field(ML,         y, CW*0.40, 'Nombre',  v('sol-nombre'));
+    field(ML+CW*0.40, y, CW*0.36, 'Firma',   v('sol-firma'));
+    field(ML+CW*0.76, y, CW*0.24, 'Fecha',   fmtDate(v('sol-fecha')));
+    y += FH + 3;
+
+    // ═══════════════════════════════════════════
+    // REQUISITOS MÍNIMOS
+    // ═══════════════════════════════════════════
+    fillRect(ML, y, 1.5, 5, GOLD);
+    setTxt(7, 'bold', NAVY); putTxt('Requisitos Mínimos que deben Cumplir las Pignoraciones para ser Aceptadas', ML+4, y+0.5);
+    hline(y+6, LINE, 0.3);
+    y += 8;
+
+    const reqs = [
+      'Las edificaciones deben ser de muros de bloques concreto y techos de concreto o aluzínc sobre estructuras metálicas. Las puertas deben ser seguras, preferiblemente enrollables o similares.',
+      'Los silos deben ser herméticos, metálicos o de concreto.',
+      'Las mercancías deben estar colocadas de manera que se puedan cuantificar con facilidad.',
+      'En los almacenes y silos solo pueden existir mercancías pignoradas. No habrá ninguna otra mercancía.',
+      'Cada silo o almacén debe poseer al menos un candado del que solo tenga las llaves el personal de la empresa pignoradora.',
+      'En cada almacén o silo debe haber por lo menos un extintor de 10 libras o mayor.',
+      'En los almacenes las mercancías deben estar colocadas sobre tarimas.',
+      'El cableado eléctrico debe estar empotrado o en tuberías metálicas (EMT).',
+      'Las mercancías deben estar custodiadas de forma permanente.',
+      'Los silos y almacenes deben ser suficientemente seguros para que nadie tenga acceso en ausencia del custodio, a menos que se utilice escalamiento o violencia.',
+      'Cada silo o almacén debe estar enumerado de forma visible.',
+      'Las mercancías pignoradas deben estar identificadas mediante la tarjeta de la empresa pignoradora.',
+    ];
+    doc.setFontSize(6.5); doc.setFont('helvetica','normal');
+    // Two-column layout for requirements to save space
+    const reqColW = (CW-4)/2;
+    let ry1=y, ry2=y;
+    reqs.forEach((req, i) => {
+      const col = i < 6 ? 0 : 1;
+      const rx = ML + col*(reqColW+4);
+      const ry = col===0 ? ry1 : ry2;
+      const lines = doc.splitTextToSize(`${i+1}.  ${req}`, reqColW-2);
+      const rh = lines.length * 3.2 + 1;
+      if (i%2===0) fillRect(rx, ry, reqColW, rh, BG_F);
+      doc.setTextColor(...GRAY);
+      doc.text(lines, rx+1.5, ry+0.8, {baseline:'top'});
+      if (col===0) ry1+=rh; else ry2+=rh;
+    });
+    y = Math.max(ry1, ry2) + 3;
+
+    hline(y, LINE); y += 3;
+
+    // ═══════════════════════════════════════════
+    // D. RESULTADOS DE LA INSPECCIÓN
+    // ═══════════════════════════════════════════
+    y = secTitle('RESULTADOS DE LA INSPECCIÓN  —  Para uso de Seguros Banreservas', y);
+
+    const resultado = document.querySelector('input[name="resultado"]:checked')?.value || '';
+    const isApro = resultado==='Aprobado', isRech=resultado==='Rechazado';
+    const resBg  = isApro?[230,249,238]:isRech?[253,232,230]:BG_F;
+    const resBdr = isApro?[46,125,82]:isRech?[198,40,40]:LGRAY;
+    const resTxt = isApro?[25,100,55]:isRech?[150,20,20]:GRAY;
+
+    // Checkboxes Aprobado / Rechazado side by side
+    drawCheckbox(ML, y+1, isApro);
+    setTxt(8.5, isApro?'bold':'normal', isApro?NAVY:GRAY); putTxt('Aprobado', ML+5, y+0.8);
+    drawCheckbox(ML+30, y+1, isRech);
+    setTxt(8.5, isRech?'bold':'normal', isRech?NAVY:GRAY); putTxt('Rechazado', ML+35, y+0.8);
+    y += 7;
+
+    // Observaciones
+    const obsTxt = v('observaciones') || '';
+    const obsLines2 = doc.splitTextToSize(obsTxt, CW-3);
+    const obsH = Math.max(16, obsLines2.length*3.8+5);
+    fillRect(ML, y, CW, obsH, BG_F);
+    doc.setDrawColor(...LINE); doc.setLineWidth(0.2); doc.line(ML, y+obsH, ML+CW, y+obsH);
+    setTxt(5.5, 'normal', GRAY); putTxt('Observaciones', ML+1.5, y+0.8);
+    if (obsTxt) { setTxt(8, 'normal', DGRAY); doc.text(obsLines2, ML+1.5, y+4.5, {baseline:'top'}); }
+    y += obsH + 1;
+
+    field(ML,         y, CW*0.40, 'Nombre del Inspector', v('insp-nombre'));
+    field(ML+CW*0.40, y, CW*0.36, 'Firma',                v('insp-firma'));
+    field(ML+CW*0.76, y, CW*0.24, 'Fecha',                fmtDate(v('insp-fecha')));
+    y += FH + 4;
+
+    // ── FOOTER ────────────────────────────────────────────────────
+    fillRect(ML, PH-9, CW, 0.7, GOLD);
+    setTxt(6.5, 'normal', GRAY);
+    putTxt('Seguros Banreservas  ·  Solicitud de Inspección y Aprobación de Pignoración  ·  Documento oficial',
+      PW/2, PH-7, {align:'center'});
+
+    const filename = `Solicitud_Pignoración_${v('cliente')||'SinNombre'}_${new Date().toISOString().slice(0,10)}.pdf`;
+    doc.save(filename);
+    showToast('PDF generado exitosamente', 'success');
+
+  } catch(e) {
+    console.error(e);
+    showToast('Error al generar PDF: ' + e.message, 'error');
+  }
+}
+</script>
+</body>
+</html>
